@@ -6,7 +6,6 @@ class Cycle:
 		self.next = None
 		self.isAvail = True
 
-
 class Cycles:
 	def __init__(self):
 		self.head = None
