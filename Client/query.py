@@ -1,6 +1,6 @@
 import paramiko
 from cryptography.fernet import Fernet
-from Client_Server import reg_name, reg_uid, cyc
+import sys
 import base64
 
 
@@ -17,6 +17,10 @@ class SMTH():
         else:
             return False
 
+reg_name = sys.argv[1]
+reg_uid = sys.argv[2]
+cyc = sys.argv[3]
+
 trial = 0
 while trial < 5:
     y = SMTH().smth()
@@ -29,14 +33,20 @@ while trial < 5:
         ssh.load_system_host_keys()
         ssh.connect(ip, username=usr, password=pas)
         print("Connected to Host Server")
-        #key = Fernet.generate_key()
-        #cipher = Fernet(key)
-        #name = cipher.encrypt(reg_name.encode())
-        #uid = cipher.encrypt(reg_uid.encode())
-        #selection = cipher.encrypt(cyc.encode())
+        key = Fernet.generate_key()
+        cipher = Fernet(key)
+        name = cipher.encrypt(reg_name.encode())
+        uid = cipher.encrypt(reg_uid.encode())
+        selection = cipher.encrypt(cyc.encode())
         
-        #key_str = base64.urlsafe_b64encode(key).decode()
-        stdin, stdout, stderr = ssh.exec_command(f"python3 ~/Project/Host.py {reg_name} {reg_uid} {cyc}")
+        name = base64.urlsafe_b64encode(name).decode()
+        uid = base64.urlsafe_b64encode(uid).decode()
+        selection = base64.urlsafe_b64encode(selection).decode()
+        
+        key_str = base64.urlsafe_b64encode(key).decode()
+        
+        print(f"Name: {reg_name}\nUID: {reg_uid}\nSelection: {cyc}")
+        stdin, stdout, stderr = ssh.exec_command(f"python3 ~/Project/Host.py {name} {uid} {selection} {key_str}")
         for line in stdout:
             print(line.strip())
         for line in stderr:
