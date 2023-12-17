@@ -22,23 +22,25 @@ def is_valid_key(key):
         return False
 
 if __name__=="__main__":
-    if len(sys.argv) != 4:
+    if len(sys.argv) != 5:
         print("Bad Credentials, terminating the program")
-        print(sys.argv)
         exit(1)
     name = sys.argv[1]
     uid = sys.argv[2]
     selection = sys.argv[3]
+    key_str = sys.argv[4]
     
-    print(f"Recieved Values\nName: {name}\nUID: {uid}\nSelection: {selection}")
+    name = base64.urlsafe_b64decode(name)
+    uid = base64.urlsafe_b64decode(uid)
+    selection = base64.urlsafe_b64decode(selection)
 
-    #key = base64.urlsafe_b64decode(key_str)
-    #if is_valid_key(key) == False:
-    #    print("Some undefined error occured, terminating the program")
-    #    exit(-1)
-    #name = decrypt_data(name, key)
-    #uid = decrypt_data(uid, key)
-    #selection = decrypt_data(selection, key)
+    key = base64.urlsafe_b64decode(key_str)
+    if is_valid_key(key) == False:
+        print("Some undefined error occured, terminating the program")
+        exit(-1)
+    name = decrypt_data(name, key)
+    uid = decrypt_data(uid, key)
+    selection = decrypt_data(selection, key)
     file_path = f"/home/Host/Project/Registrations/{uid}.txt"
     n = random.randint(1000, 9999)
     try:
@@ -50,19 +52,24 @@ if __name__=="__main__":
     except Exception as e:
         print(f"An error occured: {e}")
         exit(2)
-    linkedlist = Cycles()
     with open("/home/Host/Project/cycles.txt", "r") as file:
         for line in file:
             elements = line.split()
             name = elements[0]
             avail = elements[1]
-            linkedlist.append(name, avail)
-    current = linkedlist.head
-    while current != None:
-        if current.name == selection:
-            break
-        current = current.next
-    current.isAvail = False
-    linkedlist.update()
+            cycles.append(name, avail)
+    current = cycles.head
+    with open("/home/Host/Project/cycles.txt", "w") as file:
+        while current != None:
+            if current.name == selection:
+                current.isAvail = False
+            avail = ""
+            if current.isAvail == True:
+                avail = "Available"
+            else:
+                avail = "Not_Available"
+            file.write(f"{current.name} {avail}\n")
+            current = current.next
     data = f"Thanks for the purchase\n{n} is your passkey for the chosen bicycle"
     print(data)
+    
