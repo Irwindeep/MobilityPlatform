@@ -6,6 +6,7 @@ class Cycle:
 		self.next = None
 		self.isAvail = True
 
+
 class Cycles:
 	def __init__(self):
 		self.head = None
@@ -24,16 +25,6 @@ class Cycles:
 		while current.next != None:
 			current = current.next
 		current.next = newCycle
-	def update(self):
-		with open("cycles.txt", "w") as file:
-			current == self.head
-			avail = ""
-			if current.isAvail == True:
-				avail = "Available"
-			else:
-				avail = "Not_Available"
-			while current != None:
-				file.write(f"{current.name} {avail}\n")
 	def printall(self):
 		current = self.head
 		if current.isAvail == True:
@@ -55,7 +46,8 @@ class Cycles:
 		i = 0
 		current = self.head
 		while current != None and i != index:
-			i += 1
+			if current.isAvail:
+				i += 1
 			current = current.next
 		print(current.name)
 				
