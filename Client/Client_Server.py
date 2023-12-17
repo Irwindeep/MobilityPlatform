@@ -5,10 +5,9 @@ import paramiko
 global reg_updater, reg_time
 reg_updater = 0
 reg_time = 0
-global reg_name, reg_uid, cyc
+global reg_name, reg_uid
 reg_name = ""
 reg_uid = ""
-cyc = ""    
 
 class Main_Menu():
     def main_menu(self):
@@ -75,6 +74,7 @@ class Bicycles(Registration):
                 elements = []
                 for line in stdout:
                     elements.append(line.strip())
+                global cyc
                 cyc = elements[0]
                 ssh.close()
                 print(f"Bicycle {cyc} has been chosen, proceed for Payment")
@@ -116,7 +116,7 @@ class Payment():
             print("Total Rent: Rs.", 100 * reg_time)
             print("GST: Rs.", 5 * reg_time)
             print("Amount to be paid: Rs.", 105 * reg_time)
-            os.system("python3 ./query.py")
+            os.system(f"python3 ./query.py {reg_name} {reg_uid} {cyc}")
             #if len(sys.argv) != 3:
             #    print("Data not recieved")
             #    print(f"Data size: {sys.argv}")
