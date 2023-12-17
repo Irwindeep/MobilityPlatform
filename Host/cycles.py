@@ -42,7 +42,6 @@ class Cycles:
 				print(f"{i}. {current.name}")
 				i += 1
 			current = current.next
-		print(f"{i-1} Available Cycles")
 	def findIndex(self, index):
 		i = 0
 		current = self.head
