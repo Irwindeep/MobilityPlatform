@@ -60,11 +60,13 @@ class Bicycles(Registration):
         ssh.load_system_host_keys()
         ssh.connect(ip, username=usr, password=pas)
         stdin, stdout, stderr = ssh.exec_command("python3 ~/Project/cycles.py")
+        max_cycles = 0
         for line in stdout:
             print(line.strip())
+            max_cycles += 1
         ssh.close()
         cycle_choice = int(input("Enter the index of your desired bicycle: "))
-        if cycle_choice <= 5:
+        if cycle_choice <= max_cycles:
             if reg_updater == 0:
                 print("Register Yourself")
                 Registration().register()
@@ -117,15 +119,6 @@ class Payment():
             print("GST: Rs.", 5 * reg_time)
             print("Amount to be paid: Rs.", 105 * reg_time)
             os.system(f"python3 ./query.py {reg_name} {reg_uid} {cyc}")
-            #if len(sys.argv) != 3:
-            #    print("Data not recieved")
-            #    print(f"Data size: {sys.argv}")
-            #    sys.exit(1)
-            #print("Recieved Data")
-            #key = sys.argv[1]
-            #data = sys.argv[2]
-            #passkey = decrypt_data(key, data)
-            #print(passkey)
         else:
             os.system("clear")
             Registration().register()
