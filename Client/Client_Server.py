@@ -71,6 +71,9 @@ class Bicycles(Registration):
             print(line.strip())
             max_cycles += 1
         ssh.close()
+        if max_cycles == 0:
+            print("Unfortunately, all the cycles are not available, kindly visit again")
+            exit(0)
         cycle_choice = int(input("Enter the index of your desired bicycle: "))
         if cycle_choice <= max_cycles:
             if reg_updater == 0:
