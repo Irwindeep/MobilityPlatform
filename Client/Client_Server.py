@@ -1,6 +1,8 @@
 import os
 import sys
 import paramiko
+from cryptography.fernet import Fernet
+import base64
 
 global reg_updater, reg_time
 reg_updater = 0
@@ -16,7 +18,8 @@ class Main_Menu():
         print('''
         1. Register Yourself
         2. Available Bicycles
-        3. Exit
+        3. Return Rented Bicycle
+        4. Exit
         ''')
         choice = int(input("Your Choice: "))
         os.system("clear")
@@ -25,9 +28,12 @@ class Main_Menu():
         elif choice == 2:
             Bicycles().cycles()
         elif choice == 3:
+            Return().cycle()
+        elif choice == 4:
             os.system("exit")
         else:
             print("Invalid Choice")
+            Main_Menu.main_menu()
 
 
 class Registration():
@@ -122,8 +128,34 @@ class Payment():
         else:
             os.system("clear")
             Registration().register()
-
-
+            
+class Return:
+    def cycle(self):
+        print("\n----Tech-Driven Mobility Platform----\n")
+        UID = input("Enter your UID: ")
+        OTP = input("Enter the security key provided at the time of purchase: ")
+        usr = "Host"
+        pas = "Raspberry"
+        ip = "192.168.187.197"
+        ssh = paramiko.SSHClient()
+        ssh.load_system_host_keys()
+        ssh.connect(ip, username=usr, password=pas)
+        key = Fernet.generate_key()
+        cipher = Fernet(key)
+        Uid = cipher.encrypt(UID.encode())
+        otp = cipher.encrypt(OTP.encode())
+        
+        uid_str = base64.urlsafe_b64encode(Uid).decode()
+        otp_str = base64.urlsafe_b64encode(otp).decode()
+        key_str = base64.urlsafe_b64encode(key).decode()
+        
+        stdin, stdout, stderr = ssh.exec_command(f"python3 ~/Project/Return.py {uid_str} {key_str} {otp_str}")
+        for line in stdout:
+            print(line.strip())
+        for line in stderr:
+            print(line.strip())
+        ssh.close()
+                
 
 if __name__=="__main__":
     os.system("clear")
