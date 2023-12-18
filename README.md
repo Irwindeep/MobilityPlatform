@@ -40,8 +40,8 @@ In the [Host.py](Host/Host.py) file, the credentials will firstly be converted t
 After the user details are updated, the purchased bicycle is flagged as Not_Available using the linked-list made in the [cycles.py](Host/cycles.py) file and the [cycles.txt](/Host/cycles.txt) file is updated. <br />
 Finally, a random key (i.e., any service) will be generated and provided to the user.
 # Dependencies
-* Raspbian Imaging: The [Raspbian Operator](https://www.raspberrypi.com/software/) is required to be installed in your Raspberry Pi and that can be done using a [Raspbian Imager](https://www.raspberrypi.com/software/operating-systems/).
-* Virtual Network Computing (VNC): VNC is a graphical desktop-sharing system that allows users to remotely control and interact with the desktop environment of a computer or server over a network. It enables a user to view and control the graphical user interface (GUI) of another computer as if they were sitting in front of it. Some of the VNCs are: [RealVNC](https://www.realvnc.com/en/), [TigerVNC](https://tigervnc.org/) and [UltraVNC](https://uvnc.com/).
+* **Raspbian Imaging:** The [Raspbian Operator](https://www.raspberrypi.com/software/) is required to be installed in your Raspberry Pi and that can be done using a [Raspbian Imager](https://www.raspberrypi.com/software/operating-systems/).
+* **Virtual Network Computing (VNC):** VNC is a graphical desktop-sharing system that allows users to remotely control and interact with the desktop environment of a computer or server over a network. It enables a user to view and control the graphical user interface (GUI) of another computer as if they were sitting in front of it. Some of the VNCs are: [RealVNC](https://www.realvnc.com/en/), [TigerVNC](https://tigervnc.org/) and [UltraVNC](https://uvnc.com/).
 * `paramiko`: It is a python library that is used to establish SSH connection between client and host. To install paramiko, use:
   ```
   sudo apt install python3-paramiko
