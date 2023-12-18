@@ -44,8 +44,6 @@ while trial < 5:
         stdin, stdout, stderr = ssh.exec_command(f"python3 ~/Project/Host.py {name} {uid} {selection} {key_str}")
         for line in stdout:
             print(line.strip())
-        for line in stderr:
-            print(line.strip())
         ssh.close()
         break
     else:
