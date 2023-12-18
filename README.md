@@ -39,3 +39,15 @@ i.e., the credentials alongwith the key are shared as command-line arguments to 
 In the [Host.py](Host/Host.py) file, the credentials will firstly be converted to 32 URL-safe base64-encoded bytes and then the user will be registered as `./Registrations/uid.txt` and the details of the purchase will be updated in that file.<br />
 After the user details are updated, the purchased bicycle is flagged as Not_Available using the linked-list made in the [cycles.py](Host/cycles.py) file and the [cycles.txt](/Host/cycles.txt) file is updated. <br />
 Finally, a random key (i.e., any service) will be generated and provided to the user.
+# Dependencies
+* Raspbian Imaging: The [Raspbian Operator](https://www.raspberrypi.com/software/) is required to be installed in your Raspberry Pi and that can be done using a [Raspbian Imager](https://www.raspberrypi.com/software/operating-systems/).
+* Virtual Network Computing (VNC): VNC is a graphical desktop-sharing system that allows users to remotely control and interact with the desktop environment of a computer or server over a network. It enables a user to view and control the graphical user interface (GUI) of another computer as if they were sitting in front of it. Some of the VNCs are: [RealVNC](https://www.realvnc.com/en/), [TigerVNC](https://tigervnc.org/) and [UltraVNC](https://uvnc.com/).
+* `paramiko`: It is a python library that is used to establish SSH connection between client and host. To install paramiko, use:
+  ```
+  sudo apt install python3-paramiko
+  ```
+  After paramiko is installed, the host server needs to be added in the list of known hosts for the ssh of your raspberry (as a connection using paramiko will try to check if the host is present as a known host or not and `paramiko.AutoAddPolicy()` may lead to malfunctioning of the model), to implement the same, use:
+  ```
+  mkdir -p ~/.ssh
+  ssh-keyscan -H "Host_ip_address" >> ~/.ssh/known_hosts
+  ```
