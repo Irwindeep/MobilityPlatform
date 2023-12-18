@@ -4,11 +4,6 @@ import sys
 import base64
 
 
-def decrypt_data(key, data):
-    cipher_suite = Fernet(key)
-    decrypted_data = cipher_suite.decrypt(data).decode()
-    return decrypted_data
-
 class SMTH():
     def smth(self):
         x = input("Enter Payment Secret Code: ")
