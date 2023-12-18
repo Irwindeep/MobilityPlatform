@@ -133,6 +133,7 @@ class Return:
     def cycle(self):
         print("\n----Tech-Driven Mobility Platform----\n")
         UID = input("Enter your UID: ")
+        UID = UID.upper()
         OTP = input("Enter the security key provided at the time of purchase: ")
         usr = "Host"
         pas = "Raspberry"
