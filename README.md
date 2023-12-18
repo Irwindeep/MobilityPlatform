@@ -38,3 +38,4 @@ stdin, stdout, stderr = ssh.exec_command(f"python3 ~/Project/Host.py {name} {uid
 i.e., the credentials alongwith the key are shared as command-line arguments to the host server.<br />
 In the [Host.py](Host/Host.py) file, the credentials will firstly be converted to 32 URL-safe base64-encoded bytes and then the user will be registered as `./Registrations/uid.txt` and the details of the purchase will be updated in that file.<br />
 After the user details are updated, the purchased bicycle is flagged as Not_Available using the linked-list made in the [cycles.py](Host/cycles.py) file and the [cycles.txt](/Host/cycles.txt) file is updated. <br />
+Finally, a random key (i.e., any service) will be generated and provided to the user.
