@@ -14,4 +14,25 @@ In the `query()` function, another python file would be called i.e., [query.py](
 ```
 os.system(f"python3 ./query.py {reg_name} {reg_uid} {cyc}")
 ```
-Note that variables `reg_name`, `reg_uid` and `cyc` are shared as command-line arguments for the `query.py` file to access the username, UID and selected cycle model easily.<br />
+Note that variables `reg_name`, `reg_uid` and `cyc` are shared as command-line arguments for the [query.py](Client/query.py) file to access the username, UID and selected cycle model easily.<br />
+The [query.py](Client/query.py) file will access the host server to share user credentials using the same `SSH` protocol as before.<br />
+The Credentials are shared as below:
+```
+key = Fernet.generate_key()
+cipher = Fernet(key)
+name = cipher.encrypt(reg_name.encode())
+uid = cipher.encrypt(reg_uid.encode())
+selection = cipher.encrypt(cyc.encode())
+        
+name = base64.urlsafe_b64encode(name).decode()
+uid = base64.urlsafe_b64encode(uid).decode()
+selection = base64.urlsafe_b64encode(selection).decode()
+        
+key_str = base64.urlsafe_b64encode(key).decode()
+```
+i.e, firstly, all the credentials are encrypted using `Fernet(key)` method, and then, since the credentials are now 32 URL-safe base64-encoded bytes, we are required to convert them to strings and that is done using `base64.urlsafe_b64encode(data).decode()` method.<br />
+Finally, these credentials are shared to the host server using the following code:
+```
+stdin, stdout, stderr = ssh.exec_command(f"python3 ~/Project/Host.py {name} {uid} {selection} {key_str}")
+```
+i.e., the credentials alongwith the key are shared as command-line arguments to the host server.
