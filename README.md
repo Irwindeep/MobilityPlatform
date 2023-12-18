@@ -11,5 +11,7 @@ i.e.,<br />
 Then, it will call the function `Bicycles.cycles()` and display all the bicycles that are available in the host server using a `SSH` connection made using [paramiko](https://www.paramiko.org/).<br />
 After the bicycle is chosen, the function `Payment.pay()` is called and it would after confirming the credentials, call the `Payment().query()` function.<br />
 In the `query()` function, another python file would be called i.e., [query.py](Client/query.py) using the following line:<br />
-```os.system(f"python3 ./query.py {reg_name} {reg_uid} {cyc}")```
+```
+os.system(f"python3 ./query.py {reg_name} {reg_uid} {cyc}")
+```
 Note that variables `reg_name`, `reg_uid` and `cyc` are shared as command-line arguments for the `query.py` file to access the username, UID and selected cycle model easily.<br />
